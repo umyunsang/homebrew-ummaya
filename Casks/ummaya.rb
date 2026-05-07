@@ -12,8 +12,6 @@ cask "ummaya" do
   depends_on formula: "oven-sh/bun/bun"
   depends_on formula: "uv"
 
-  conflicts_with formula: "ummaya"
-
   postflight do |c|
     wrapper = HOMEBREW_PREFIX/"bin/ummaya"
     wrapper.write <<~SH
