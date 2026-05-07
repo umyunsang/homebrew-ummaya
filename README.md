@@ -7,6 +7,12 @@ brew tap umyunsang/ummaya
 brew install ummaya
 ```
 
+CLI cask install:
+
+```bash
+brew install --cask ummaya
+```
+
 One-line install:
 
 ```bash
