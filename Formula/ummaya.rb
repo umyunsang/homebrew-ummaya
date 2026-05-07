@@ -14,7 +14,11 @@ class Ummaya < Formula
 
   def install
     libexec.install Dir["*"]
-    bin.install_symlink libexec/"bin/ummaya" => "ummaya"
+    (bin/"ummaya").write <<~SH
+      #!/bin/bash
+      export PATH="#{Formula["bun"].opt_bin}:#{Formula["uv"].opt_bin}:$PATH"
+      exec "#{Formula["bun"].opt_bin}/bun" "#{libexec}/bin/ummaya" "$@"
+    SH
   end
 
   def caveats
