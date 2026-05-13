@@ -4,16 +4,16 @@
 class Ummaya < Formula
   desc "Conversational multi-agent harness for Korean public-service channels"
   homepage "https://github.com/umyunsang/UMMAYA"
-  url "https://registry.npmjs.org/ummaya/-/ummaya-0.1.0.tgz"
-  sha256 "6fff4257b4f58d8bd23f3ce55c13e7d4772e9116a39a324d500a3035592c9662"
+  url "https://registry.npmjs.org/ummaya/-/ummaya-0.1.1.tgz"
+  sha256 "ebabd6242972759ece8064065aea65d10ca1087487189156012a5f11bba46585"
   license "Apache-2.0"
 
-  depends_on "node" => :build
   depends_on "oven-sh/bun/bun"
   depends_on "uv"
 
   def install
     libexec.install Dir["*"]
+    system Formula["bun"].opt_bin/"bun", "install", "--production", "--no-save", "--cwd", libexec
     (bin/"ummaya").write <<~SH
       #!/bin/bash
       export PATH="#{Formula["bun"].opt_bin}:#{Formula["uv"].opt_bin}:$PATH"
