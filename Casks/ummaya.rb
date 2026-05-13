@@ -13,11 +13,18 @@ cask "ummaya" do
   depends_on formula: "oven-sh/bun/bun"
   depends_on formula: "uv"
 
-  postflight do |c|
-    system_command "#{HOMEBREW_PREFIX}/opt/bun/bin/bun",
-                   args: ["install", "--production", "--no-save", "--cwd", "#{c.staged_path}/package"]
+  preflight do |c|
+    install_args = ["install", "--production", "--cwd", "#{c.staged_path}/package"]
+    if File.exist?("#{c.staged_path}/package/bun.lock")
+      install_args << "--frozen-lockfile"
+    else
+      install_args << "--no-save"
+    end
 
-    wrapper = HOMEBREW_PREFIX/"bin/ummaya"
+    system_command "#{HOMEBREW_PREFIX}/opt/bun/bin/bun",
+                   args: install_args
+
+    wrapper = c.staged_path/"ummaya"
     wrapper.write <<~SH
       #!/bin/bash
       export PATH="#{HOMEBREW_PREFIX}/opt/bun/bin:#{HOMEBREW_PREFIX}/opt/uv/bin:$PATH"
@@ -26,7 +33,7 @@ cask "ummaya" do
     FileUtils.chmod 0755, wrapper
   end
 
-  uninstall delete: "#{HOMEBREW_PREFIX}/bin/ummaya"
+  binary "ummaya"
 
   zap trash: "~/.ummaya"
 end
