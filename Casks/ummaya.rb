@@ -4,7 +4,8 @@ cask "ummaya" do
   version "0.1.1"
   sha256 "ebabd6242972759ece8064065aea65d10ca1087487189156012a5f11bba46585"
 
-  url "https://registry.npmjs.org/ummaya/-/ummaya-#{version}.tgz"
+  url "https://registry.npmjs.org/ummaya/-/ummaya-#{version}.tgz",
+      verified: "registry.npmjs.org/ummaya/"
   name "UMMAYA"
   desc "Conversational multi-agent harness for Korean public-service channels"
   homepage "https://github.com/umyunsang/UMMAYA"
@@ -12,7 +13,20 @@ cask "ummaya" do
   depends_on formula: "oven-sh/bun/bun"
   depends_on formula: "uv"
 
-  binary "package/bin/ummaya"
+  postflight do |c|
+    system_command "#{HOMEBREW_PREFIX}/opt/bun/bin/bun",
+                   args: ["install", "--production", "--no-save", "--cwd", "#{c.staged_path}/package"]
+
+    wrapper = HOMEBREW_PREFIX/"bin/ummaya"
+    wrapper.write <<~SH
+      #!/bin/bash
+      export PATH="#{HOMEBREW_PREFIX}/opt/bun/bin:#{HOMEBREW_PREFIX}/opt/uv/bin:$PATH"
+      exec "#{HOMEBREW_PREFIX}/opt/bun/bin/bun" "#{c.staged_path}/package/bin/ummaya" "$@"
+    SH
+    FileUtils.chmod 0755, wrapper
+  end
+
+  uninstall delete: "#{HOMEBREW_PREFIX}/bin/ummaya"
 
   zap trash: "~/.ummaya"
 end
