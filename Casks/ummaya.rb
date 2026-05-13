@@ -12,17 +12,7 @@ cask "ummaya" do
   depends_on formula: "oven-sh/bun/bun"
   depends_on formula: "uv"
 
-  postflight do |c|
-    wrapper = HOMEBREW_PREFIX/"bin/ummaya"
-    wrapper.write <<~SH
-      #!/bin/bash
-      export PATH="#{HOMEBREW_PREFIX}/opt/bun/bin:#{HOMEBREW_PREFIX}/opt/uv/bin:$PATH"
-      exec "#{HOMEBREW_PREFIX}/opt/bun/bin/bun" "#{c.staged_path}/package/bin/ummaya" "$@"
-    SH
-    FileUtils.chmod 0755, wrapper
-  end
-
-  uninstall delete: "#{HOMEBREW_PREFIX}/bin/ummaya"
+  binary "package/bin/ummaya"
 
   zap trash: "~/.ummaya"
 end
