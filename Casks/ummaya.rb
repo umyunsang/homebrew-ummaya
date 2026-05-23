@@ -3,19 +3,20 @@
 cask "ummaya" do
   arch arm: "arm64", intel: "x64"
 
-  version "0.1.16"
-  sha256 arm:   "66704302a670fa8efcbba36d7cbd6927d045179db46a51998106bfa202625ecb",
-         intel: "9ffe3b85d2e3da65434c1000bcd8831bccc8120ee755ad8faedf6c6a1262b31d"
+  version "0.1.17"
+  sha256 arm:   "88280d98f256fac399726adbc794723593e11ff4f2d4a060d8fda71e8137bc88",
+         intel: "6823e69f32de101e2d4826c3eb9e73e8aa85bd5d793789637dbf49b570a94660"
 
-  url "https://github.com/umyunsang/UMMAYA/releases/download/v#{version}/ummaya-#{version}-macos-#{arch}.tar.gz"
+  url "https://ummaya-docs.pages.dev/downloads/homebrew/v#{version}/ummaya-#{version}-macos-#{arch}.tar.gz"
   name "UMMAYA"
   desc "Conversational multi-agent harness for Korean public-service channels"
-  homepage "https://github.com/umyunsang/UMMAYA"
+  homepage "https://ummaya-docs.pages.dev/"
 
   livecheck do
-    url :url
-    regex(/^v?(\d+(?:\.\d+)+)$/i)
-    strategy :github_latest
+    url "https://ummaya-docs.pages.dev/downloads/homebrew/latest.json"
+    strategy :json do |json|
+      json["version"]
+    end
   end
 
   depends_on :macos
