@@ -3,9 +3,9 @@
 cask "ummaya" do
   arch arm: "arm64", intel: "x64"
 
-  version "0.2.3"
-  sha256 arm:   "52ceae09a08ef61b663ede848cd971d08ae27eea6b76240ccc01c7c0b500f6d5",
-         intel: "c6f58891110efb4b0d0a681d747cd56625d63edc14ee3142e93eb633b1002dc4"
+  version "0.2.4"
+  sha256 arm:   "fa6ffaa237cca424d5908babceeef54d66ae93b52a54bc3a26cbfb4433c24bb8",
+         intel: "bb38c2bcecb8036785ea03d27ee6ad8dee3d7c1a00afa1e309bf032840addb99"
 
   url "https://ummaya-docs.pages.dev/downloads/homebrew/v#{version}/ummaya-#{version}-macos-#{arch}.tar.gz"
   name "UMMAYA"
