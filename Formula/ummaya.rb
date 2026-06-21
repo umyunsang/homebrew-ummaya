@@ -4,8 +4,8 @@
 class Ummaya < Formula
   desc "Conversational multi-agent harness for Korean public-service channels"
   homepage "https://github.com/umyunsang/UMMAYA"
-  url "https://registry.npmjs.org/ummaya/-/ummaya-0.1.1.tgz"
-  sha256 "ebabd6242972759ece8064065aea65d10ca1087487189156012a5f11bba46585"
+  url "https://registry.npmjs.org/ummaya/-/ummaya-0.2.28.tgz"
+  sha256 "385f985e9dd0a32002b5fa3f11f9fdb6771731a96b40196493cd80f475700d93"
   license "Apache-2.0"
 
   depends_on "oven-sh/bun/bun"
